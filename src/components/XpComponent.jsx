@@ -2,7 +2,6 @@ import React from "react";
 import { IoIosArrowDown } from "react-icons/io";
 
 const XpComponent = ({ xpData }) => {
-  console.log(xpData);
   // "name": "avakinlife",
   // "level": 63,
   // "level_xp": 2720775,
@@ -23,7 +22,6 @@ const XpComponent = ({ xpData }) => {
             aria-controls="flush-collapseOne"
           >
             XP
-            <IoIosArrowDown />
           </button>
         </h2>
         <div
@@ -43,19 +41,13 @@ const XpComponent = ({ xpData }) => {
 
                 return (
                   <div className="col" key={xp.name}>
-                    <label
-                      htmlFor={xp.name}
-                      className="form-label main-text-color"
-                    >
-                      Name:
-                    </label>
-                    <input
-                      type="text"
-                      value={xp.name}
-                      disabled
-                      className="form-control"
-                      id={xp.name}
-                    />
+                    <div className="d-flex justify-content-center w-100">
+                      <span
+                          className="form-label main-text-color badge rounded-pill text-bg-primary"
+                      >
+                      {xp.name}
+                    </span>
+                    </div>
                     <label
                       htmlFor={xp.level}
                       className="form-label main-text-color my-4 pe-2"

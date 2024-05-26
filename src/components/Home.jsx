@@ -20,8 +20,8 @@ export const Home = () => {
   const [selectedSubCategory, setSelectedSubCategory] = useState("");
   const [selectedCurrency, setSelectedCurrency] = useState("");
   const [buyNowLink, setBuyNowLink] = useState("");
-  const [activeReleaseDateSort, setActiveReleaseDateSort] = useState("asc");
-  const [activePriceSort, setActivePriceSort] = useState("asc");
+  const [activeReleaseDateSort, setActiveReleaseDateSort] = useState("");
+  const [activePriceSort, setActivePriceSort] = useState("");
 
   const containerRef = useRef(null);
 
@@ -33,17 +33,6 @@ export const Home = () => {
     if (selectedId) fetchAccountDetails(selectedId);
   }, [selectedId]);
 
-  useEffect(() => {
-    if (accountDetails && searchTerm === "") {
-      setItemsData(accountDetails.itemsData);
-      return;
-    }
-    if (!selectedId) return;
-
-    const timeoutId = setTimeout(() => fetchItems(), 500);
-
-    return () => clearTimeout(timeoutId);
-  }, [searchTerm]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -66,6 +55,7 @@ export const Home = () => {
     selectedCurrency,
     activeReleaseDateSort,
     activePriceSort,
+    searchTerm
   ]);
 
   const fetchAccounts = async () => {
@@ -91,7 +81,7 @@ export const Home = () => {
     ] = await Promise.all([
       axios.get(`http://5.161.90.55:8000/accounts/${id}/xp`),
       axios.get(`http://5.161.90.55:8000/accounts/${id}/profile`),
-      axios.get(`http://5.161.90.55:8000/accounts/${id}/items?price_sort=${activePriceSort}&release_date_sort=${activeReleaseDateSort}`),
+      axios.get(`http://5.161.90.55:8000/accounts/${id}/items`),
       axios.get(`http://5.161.90.55:8000/accounts/${id}/item_stats`),
       axios.get(`http://5.161.90.55:8000/accounts/${id}/account_worth`),
       axios.get(`http://5.161.90.55:8000/accounts/${id}/items/categories`),
@@ -126,7 +116,8 @@ export const Home = () => {
   const buildUrl = (extraParams = {}) => {
     const params = new URLSearchParams();
     if (searchTerm) params.append("keyword", searchTerm);
-    if (activePriceSort) params.append("price_sort", activePriceSort);
+    if (activePriceSort)
+      params.append("price_sort", activePriceSort);
     if (activeReleaseDateSort)
       params.append("release_date_sort", activeReleaseDateSort);
     if (selectedCategory) params.append("category", selectedCategory);
@@ -137,13 +128,12 @@ export const Home = () => {
     Object.entries(extraParams).forEach(([key, value]) =>
       params.append(key, value)
     );
-
     return `http://5.161.90.55:8000/accounts/${selectedId}/items?${params.toString()}`;
   };
   const handleResetButton = () => {
     setSearchTerm("");
-    setActivePriceSort("asc");
-    setActiveReleaseDateSort("asc");
+    setActivePriceSort("");
+    setActiveReleaseDateSort("");
     setSelectedCategory("")
     setSelectedSubCategory("");
     setSelectedCurrency("");
@@ -172,7 +162,10 @@ export const Home = () => {
               key={account.id}
               id={account.id}
               setBuyNowLink={setBuyNowLink}
-              handleCardClick={setSelectedId}
+              handleCardClick={(id) => {
+                  setSelectedId(id)
+              }}
+              selectedId={selectedId}
               buy_now_link={account.buy_now}
               account_gender={account.account_gender}
               title={account.title}

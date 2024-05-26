@@ -22,9 +22,6 @@ const AccordionComponentData = ({ itemStatsData, slug, title }) => {
             aria-controls={`flush-collapse${slug}`}
           >
             {title}
-            <span>
-            <IoIosArrowDown />
-            </span>
           </button>
         </h2>
         <div
@@ -38,7 +35,7 @@ const AccordionComponentData = ({ itemStatsData, slug, title }) => {
               <div className="row row-cols-1 row-cols-md-2">
                 {Object.entries(transformedData).map(([key, value]) => (
                   <div key={key} className="col pt-3">
-                    <label for={key} className="form-label  main-text-color">
+                    <label htmlFor={key} className="form-label  main-text-color">
                       {key}
                     </label>
 

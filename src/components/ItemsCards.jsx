@@ -13,6 +13,7 @@ const ItemsCards = ({ itemsData }) => {
       price={item.price}
       name={item.name}
       currency={item.currency}
+      availability={!item.hidden}
     />
   ));
 };

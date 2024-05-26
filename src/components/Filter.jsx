@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { motion } from "framer-motion";
 const Filter = ({
   accountDetails,
@@ -6,31 +6,33 @@ const Filter = ({
   setSelectedSubCategory,
   setSelectedCurrency,
   setSelectedAvailability,
-  fetchItems,
   selectedCategory,
-  handleResetButton,
 }) => {
+  const [showSubCategory, setShowSubCategory] = useState(false);
+  const [subCategories, setSubCategories] = useState([]);
+
   const handleCategoryChange = (event) => {
     setSelectedCategory(event.target.value);
-    fetchItems();
+    setShowSubCategory(!!event.target.value)
+    accountDetails.categoriesData.map(function (value){
+      if (value.name === event.target.value)
+        setSubCategories(value['sub_categories'])
+    })
   };
 
   const handleSubCategoryChange = (event) => {
     setSelectedSubCategory(event.target.value);
-    fetchItems();
   };
 
   const handleCurrencyChange = (event) => {
     setSelectedCurrency(event.target.value);
-    fetchItems();
   };
   const handleAvailabilityChange = (event) => {
     setSelectedAvailability(event.target.value);
-    fetchItems();
   };
 
   return (
-    <div className="col-lg-4 col-12 order mt">
+    <div className="order my-3">
       <div className="">
         <motion.label
           initial={{ opacity: 0 }}
@@ -67,7 +69,9 @@ const Filter = ({
           viewport={{ once: true }}
           transition={{ duration: 0.3, delay: 0.6 }}
           htmlFor="sub_category"
+          hidden={!showSubCategory}
           className="form-label main-text-color pt-3"
+
         >
           Sub Category:
         </motion.label>
@@ -78,18 +82,18 @@ const Filter = ({
           transition={{ duration: 0.3, delay: 0.8 }}
           id="sub_category"
           className="w-100"
+          hidden={!showSubCategory}
           onChange={handleSubCategoryChange}
         >
           <option value="" selected>
             -- choose sub category from the list --
           </option>
-          {accountDetails.categoriesData.flatMap((category) =>
-            category.sub_categories.map((subCategory) => (
-              <option key={subCategory} value={subCategory}>
-                {subCategory}
-              </option>
+          {
+            subCategories.map((subCategory) => (
+                <option key={subCategory} value={subCategory}>{subCategory.replaceAll('_', ' ')}</option>
             ))
-          )}
+          }
+
         </motion.select>
         <motion.label
           initial={{ opacity: 0 }}
@@ -110,7 +114,7 @@ const Filter = ({
           className="w-100"
           onChange={handleCurrencyChange}
         >
-          <option value="" disabled selected>
+          <option value="" selected>
             -- choose Currency from the list --
           </option>
           {["Coins", "Crowns", "Free", "Gems"].map((currency) => (
@@ -138,27 +142,16 @@ const Filter = ({
           className="w-100"
           onChange={handleAvailabilityChange}
         >
-          <option value="" disabled selected>
+          <option value="" selected>
             -- choose Availability from the list --
           </option>
           {[true, false].map((availability) => (
             <option key={availability} value={availability}>
-              {availability.name ? "Available" : "Hidden"}
+              {availability ? "Available" : "Hidden"}
             </option>
           ))}
         </motion.select>
       </div>
-      <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.3, delay: 0.3 }}
-        className="end"
-      >
-        <button onClick={handleResetButton} className="btn btn-main">
-          Clear filter
-        </button>
-      </motion.div>
     </div>
   );
 };

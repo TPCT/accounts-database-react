@@ -34,10 +34,10 @@ const AccountDetails = ({
       className="fixed-buy-btn"
     >
       <a href={buyNowLink} target="_blank" rel="noreferrer">
-        <button class="btn btn-primary">Buy Now</button>
+        <button className="btn btn-primary">Buy Now</button>
       </a>
     </motion.div>
-    <h2 className="main-text-color py-4 pb-5">Additional Details</h2>
+    <h2 className="main-text-color py-1">Additional Details</h2>
     <div className="row row-cols-1 row-cols-lg-2">
       <motion.div
         initial={{ opacity: 0 }}
@@ -93,12 +93,12 @@ const AccountDetails = ({
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
       transition={{ duration: 0.3, delay: 0.2 }}
-      className="main-text-color py-4 pb-5"
+      className="main-text-color py-1"
     >
       Items Details
     </motion.h2>
     <div className="row items-details-container">
-      <div className="col-lg-8 col-12 mb-3">
+      <div className="col-12 mb-3">
         <div className="">
           <motion.label
             initial={{ opacity: 0 }}
@@ -131,7 +131,7 @@ const AccountDetails = ({
           className="d-flex flex-column flex-sm-row g-4 pt-3 justify-content-between sorting-container"
         >
           <div className="d-flex">
-            <span className="main-text-color pe-3">Sort By: </span>
+            <span className="main-text-color pe-3">Release Date: </span>
             <div
               className={`pointer me-4 ${
                 activeReleaseDateSort === "asc"
@@ -193,9 +193,20 @@ const AccountDetails = ({
             </div>
           </div>
         </motion.div>
+
+        <Filter
+            accountDetails={accountDetails}
+            setSelectedCategory={setSelectedCategory}
+            setSelectedSubCategory={setSelectedSubCategory}
+            setSelectedCurrency={setSelectedCurrency}
+            setSelectedAvailability={setSelectedAvailability}
+            fetchItems={fetchItems}
+            handleResetButton={handleResetButton}
+        />
       </div>
+
       <div
-        className="scrollable-container col-12 col-lg-8 mb-4"
+        className="scrollable-container col-12 mb-4"
         ref={containerRef}
       >
         <div className="">
@@ -204,15 +215,7 @@ const AccountDetails = ({
 
         {loading && <LoadingGrow />}
       </div>
-      <Filter
-        accountDetails={accountDetails}
-        setSelectedCategory={setSelectedCategory}
-        setSelectedSubCategory={setSelectedSubCategory}
-        setSelectedCurrency={setSelectedCurrency}
-        setSelectedAvailability={setSelectedAvailability}
-        fetchItems={fetchItems}
-        handleResetButton={handleResetButton}
-      />
+
     </div>
   </div>
 );
