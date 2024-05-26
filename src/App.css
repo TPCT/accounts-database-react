@@ -289,7 +289,8 @@ padding-inline: 1rem;
     }
 
     .item-card{
-        width: 50%;
+        width: 100% !important;
+        max-width: initial !important;
     }
 
     .scrollable-container > div{
