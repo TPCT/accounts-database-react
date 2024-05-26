@@ -55,6 +55,7 @@ export const Home = () => {
     selectedCurrency,
     activeReleaseDateSort,
     activePriceSort,
+    selectedAvailability,
     searchTerm
   ]);
 

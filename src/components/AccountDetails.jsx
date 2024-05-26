@@ -138,11 +138,14 @@ const AccountDetails = ({
                   ? "active-sort-color"
                   : "main-text-color"
               }`}
-              onClick={() =>
-                activeReleaseDateSort === "asc"
-                  ? ""
-                  : setActiveReleaseDateSort("asc")
-              }
+              onClick={() =>{
+                if (activeReleaseDateSort === "asc") {
+                  setActiveReleaseDateSort("");
+                  return;
+                }
+                setActiveReleaseDateSort("asc")
+                setActivePriceSort("");
+              }}
             >
               <FaSortAmountDown className="me-2 " size={"18px"} />
               <span>Asc</span>
@@ -153,11 +156,14 @@ const AccountDetails = ({
                   ? "active-sort-color"
                   : "main-text-color"
               }`}
-              onClick={() =>
-                activeReleaseDateSort === "desc"
-                  ? ""
-                  : setActiveReleaseDateSort("desc")
-              }
+              onClick={() => {
+                if (activeReleaseDateSort === "desc") {
+                  setActiveReleaseDateSort("");
+                  return;
+                }
+                setActiveReleaseDateSort("desc")
+                setActivePriceSort("");
+              }}
             >
               <FaSortAmountDownAlt className="me-1" size={"18px"} />{" "}
               <span className=" ">desc</span>
@@ -171,9 +177,14 @@ const AccountDetails = ({
                   ? "active-sort-color"
                   : "main-text-color"
               }`}
-              onClick={() =>
-                activePriceSort === "asc" ? "" : setActivePriceSort("asc")
-              }
+              onClick={() =>{
+                if (activePriceSort === "asc") {
+                  setActivePriceSort("");
+                  return;
+                }
+                setActivePriceSort("asc");
+                setActiveReleaseDateSort("")
+              }}
             >
               <FaSortAmountDown className="me-2 " size={"18px"} />
               <span>Asc</span>
@@ -184,9 +195,14 @@ const AccountDetails = ({
                   ? "active-sort-color"
                   : "main-text-color"
               }`}
-              onClick={() =>
-                activePriceSort === "desc" ? "" : setActivePriceSort("desc")
-              }
+              onClick={() =>{
+                if (activePriceSort === "desc") {
+                  setActivePriceSort("");
+                  return;
+                }
+                setActivePriceSort("desc");
+                setActiveReleaseDateSort("")
+              }}
             >
               <FaSortAmountDownAlt className="me-1" size={"18px"} />{" "}
               <span className=" ">desc</span>
