@@ -1,5 +1,6 @@
 import React from "react";
 import { transformKey } from "../utils/transformData";
+import { IoIosArrowDown } from "react-icons/io";
 
 const AccordionComponentData = ({ itemStatsData, slug, title }) => {
   const transformedData = Object.fromEntries(
@@ -20,7 +21,10 @@ const AccordionComponentData = ({ itemStatsData, slug, title }) => {
             aria-expanded="false"
             aria-controls={`flush-collapse${slug}`}
           >
-            {title}{" "}
+            {title}
+            <span>
+            <IoIosArrowDown />
+            </span>
           </button>
         </h2>
         <div

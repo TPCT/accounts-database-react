@@ -30,7 +30,7 @@ body {
 }
 .account-card.female-bg {
   /* background: #ff69b4; */
-  background: #E778F0;
+  background: #e778f0;
 }
 .account-card.female-bg a button {
   background: #fff;
@@ -65,6 +65,12 @@ body {
 .main-text-color {
   color: #f2f3f5;
 }
+.active-sort-color {
+  color: #7289da;
+}
+.pointer {
+  cursor: pointer;
+}
 .account-details-boxes {
   display: flex;
   gap: 30px;
@@ -76,9 +82,9 @@ body {
   background-color: #3a3d43;
   flex-shrink: 0;
 }
-@media (max-width: 990px) {
+@media (max-width: 991px) {
   .accounts-cards {
-    grid-template-columns: 4fr 4fr 4fr;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   }
 }
 @media (max-width: 767px) {
@@ -150,64 +156,187 @@ body {
 }
 
 .accordion-body .progress {
-
   --bs-progress-bg: #23272a;
 }
 .accordion-body .progress-bar {
-  background: #4B0082;
+  background: #4b0082;
 }
 
 .accordion-button:not(.collapsed)::after {
   background-image: var(--bs-accordion-btn-icon);
 }
 
-
 .form-control:disabled {
   background-color: #23272a;
   color: #f2f3f5;
   border-color: #23272a;
 }
-.items-details-container .form-control{
-  background-color: #2C2F33;
+.items-details-container .form-control {
+  background-color: #2c2f33;
   color: #f2f3f5;
   border-color: #23272a;
-  
 }
- 
-.scrollable-container{
+
+.scrollable-container {
   max-height: 80vh;
   overflow-x: hidden;
   overflow-y: scroll;
 }
-.scrollable-container > div{
+.scrollable-container > div {
   display: grid;
   gap: 1rem;
-  grid-template-columns: repeat(auto-fill,minmax(250px,1fr));
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
 }
-.scrollable-container + div{
-  margin-top: -5.25rem;
+.scrollable-container + div {
+  margin-top: -8rem;
+  flex-direction: column;
+  display: flex;
+  justify-content: space-between;
 }
-.scrollable-container .card.account-card .badge{
+.scrollable-container + div button {
+  background: #6a5acd;
+  color: #f2f3f5;
+  font-weight: bold;
+}
+.scrollable-container + div .end {
+  align-self: end;
+  margin-bottom: 1rem;
+}
+.scrollable-container + div .end button:hover{
   background: #4B0082;
+  color: #f2f3f5;
+
 }
-.scrollable-container .card.account-card .badge.secondary{
-  background: #BA55D3;
+
+.scrollable-container .card.account-card .badge {
+  background: #4b0082;
 }
-.scrollable-container .card.account-card .gap{
-  gap: 0.5rem;
+.scrollable-container .card.account-card .badge.secondary {
+  background: #ba55d3;
 }
- .card.account-card img{
+.scrollable-container .card.account-card .gap {
+  gap: 0.25rem;
+}
+.card.account-card img {
   object-fit: contain;
 }
 
-.accordion .badge.secondary{
-background: #4B0082;
-padding-inline: 1rem;
+.accordion .badge.secondary {
+  background: #4b0082;
+  padding-inline: 1rem;
 }
 
 .items-details-container select {
   background: #2c2f33;
   border: none;
   color: #f2f3f5;
-  padding: .5rem;
+  padding: 0.5rem;
+}
+
+.accordion-button {
+  display: flex;
+  font-weight: bold;
+  justify-content: space-between;
+}
+
+.accordion-button:not(.collapsed)::after {
+  display: none;
+}
+.accordion-button.collapsed::after {
+  display: none;
+}
+.accordion-button svg {
+  transition: all 0.2s ease-out;
+}
+.accordion-button:not(.collapsed) svg {
+  transform: rotate(180deg);
+  transition: all 0.2s ease-out;
+}
+.card-body h5 {
+  font-size: 1.1rem;
+}
+.card-body p {
+  font-size: 1rem;
+}
+
+.scrollable-container::-webkit-scrollbar {
+  width: 5px;
+}
+
+.scrollable-container::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+.scrollable-container::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.scrollable-container::-webkit-scrollbar-track {
+  background: #3a3d43;
+  border-radius: 5px;
+}
+
+.scrollable-container .card.account-card p {
+  font-size: 0.92rem;
+}
+.scrollable-container .card-body {
+  padding-inline: 0;
+}
+.scrollable-container .card-body span,
+.scrollable-container .card-body span .pe-2 {
+  font-size: 0.9rem;
+}
+.sorting-container svg {
+  cursor: pointer;
+}
+.opacity-0 {
+  opacity: 0;
+}
+
+.fixed-buy-btn{
+  position: fixed;
+  bottom: 5%;
+  z-index: 100;
+  right: 5%;
+}
+.fixed-buy-btn button{
+  border-radius: 100%;
+  aspect-ratio: 1;
+  border-color: #5448a3;
+  background: #5448a3;
+}
+.fixed-buy-btn button:hover{
+  border-color: #3d3476;
+  background: #3d3476;
+}
+
+@media (max-width:991px){
+  .items-details-container{
+    display: flex;
+    flex-direction: column;
+  }
+  .scrollable-container + div {
+    margin-top: 0;
+  }
+  .items-details-container{
+    gap: 2rem;
+  }
+  .order{
+    order: -1;
+    gap: 2rem;
+  }
+  .end{margin-bottom: 5rem;
+   width: 100%;
+    align-self: center;
+
+  }
+}
+@media (max-width:575px){
+  .sorting-container{
+    gap: 1.5rem;
+  }
+}
+.card.account-card {
+overflow: hidden;
 }
