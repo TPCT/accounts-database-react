@@ -61,7 +61,7 @@ export const Home = () => {
 
   const fetchAccounts = async () => {
     setAccountsIsLoading(true);
-    const response = await axios.get("http://5.161.90.55:8000/accounts");
+    const response = await axios.get("https://api-accounts.avkngeeks.com/accounts");
     setAccountsData(response.data);
     setAccountsIsLoading(false);
   };
@@ -80,12 +80,12 @@ export const Home = () => {
       accountWorthData,
       categoriesData,
     ] = await Promise.all([
-      axios.get(`http://5.161.90.55:8000/accounts/${id}/xp`),
-      axios.get(`http://5.161.90.55:8000/accounts/${id}/profile`),
-      axios.get(`http://5.161.90.55:8000/accounts/${id}/items`),
-      axios.get(`http://5.161.90.55:8000/accounts/${id}/item_stats`),
-      axios.get(`http://5.161.90.55:8000/accounts/${id}/account_worth`),
-      axios.get(`http://5.161.90.55:8000/accounts/${id}/items/categories`),
+      axios.get(`https://api-accounts.avkngeeks.com/accounts/${id}/xp`),
+      axios.get(`https://api-accounts.avkngeeks.com/accounts/${id}/profile`),
+      axios.get(`https://api-accounts.avkngeeks.com/accounts/${id}/items`),
+      axios.get(`https://api-accounts.avkngeeks.com/accounts/${id}/item_stats`),
+      axios.get(`https://api-accounts.avkngeeks.com/accounts/${id}/account_worth`),
+      axios.get(`https://api-accounts.avkngeeks.com/accounts/items/categories`),
     ]);
     setAccountDetails({
       xpData: xpData.data,
@@ -129,7 +129,7 @@ export const Home = () => {
     Object.entries(extraParams).forEach(([key, value]) =>
       params.append(key, value)
     );
-    return `http://5.161.90.55:8000/accounts/${selectedId}/items?${params.toString()}`;
+    return `https://api-accounts.avkngeeks.com/accounts/${selectedId}/items?${params.toString()}`;
   };
   const handleResetButton = () => {
     setSearchTerm("");
