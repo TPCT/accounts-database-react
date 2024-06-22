@@ -1,13 +1,6 @@
 import React from "react";
-import { IoIosArrowDown } from "react-icons/io";
 
 const XpComponent = ({ xpData }) => {
-  // "name": "avakinlife",
-  // "level": 63,
-  // "level_xp": 2720775,
-  // "next_level": 64,
-  // "next_level_xp": 2902675,
-  // "leveled_up": 0
 
   return (
     <div className="accordion accordion-flush" id="accordionFlushExample">
@@ -76,32 +69,8 @@ const XpComponent = ({ xpData }) => {
                       </div>
                     </div>
 
-                    {/* <input
-                    type="text"
-                    value={xp.level_xp}
-                    disabled
-                    className="form-control"
-                    id={xp.level_xp}
-                  /> */}
-
                     <hr />
                   </div>
-                  // <div key={item.name}>
-                  //   {Object.entries(item).map(([key, value]) => (
-                  //     <>
-                  //       <label htmlFor="exampleFormControlInput1" className="form-label">
-                  //         {key}
-                  //       </label>
-                  //       <input
-                  //         type="email"
-                  //         value={value}
-                  //         className="form-control"
-                  //         id="exampleFormControlInput1"
-                  //         placeholder="name@example.com"
-                  //       />
-                  //     </>
-                  //   ))}
-                  // </div>
                 );
               })}
             </div>

@@ -12,7 +12,7 @@ export const Home = () => {
   const [accountDetails, setAccountDetails] = useState(null);
   const [accountDetailsIsLoading, setAccountDetailsIsLoading] = useState(false);
   const [itemsData, setItemsData] = useState([]);
-  const [page, setPage] = useState(2);
+  const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedAvailability, setSelectedAvailability] = useState("");
@@ -22,6 +22,7 @@ export const Home = () => {
   const [buyNowLink, setBuyNowLink] = useState("");
   const [activeReleaseDateSort, setActiveReleaseDateSort] = useState("");
   const [activePriceSort, setActivePriceSort] = useState("");
+  const API_LINK = "https://api-accounts.avkngeeks.com"
 
   const containerRef = useRef(null);
 
@@ -61,7 +62,7 @@ export const Home = () => {
 
   const fetchAccounts = async () => {
     setAccountsIsLoading(true);
-    const response = await axios.get("https://api-accounts.avkngeeks.com/accounts");
+    const response = await axios.get(`${API_LINK}/accounts`);
     setAccountsData(response.data);
     setAccountsIsLoading(false);
   };
@@ -70,7 +71,9 @@ export const Home = () => {
     setAccountDetailsIsLoading(true);
     setAccountDetails(null);
     setItemsData([]);
-    setPage(2);
+    setPage(1);
+
+    handleResetButton()
 
     const [
       xpData,
@@ -80,12 +83,12 @@ export const Home = () => {
       accountWorthData,
       categoriesData,
     ] = await Promise.all([
-      axios.get(`https://api-accounts.avkngeeks.com/accounts/${id}/xp`),
-      axios.get(`https://api-accounts.avkngeeks.com/accounts/${id}/profile`),
-      axios.get(`https://api-accounts.avkngeeks.com/accounts/${id}/items`),
-      axios.get(`https://api-accounts.avkngeeks.com/accounts/${id}/item_stats`),
-      axios.get(`https://api-accounts.avkngeeks.com/accounts/${id}/account_worth`),
-      axios.get(`https://api-accounts.avkngeeks.com/accounts/items/categories`),
+      axios.get(`${API_LINK}/accounts/${id}/xp`),
+      axios.get(`${API_LINK}/accounts/${id}/profile`),
+      axios.get(`${API_LINK}/accounts/${id}/items`),
+      axios.get(`${API_LINK}/accounts/${id}/item_stats`),
+      axios.get(`${API_LINK}/accounts/${id}/account_worth`),
+      axios.get(`${API_LINK}/accounts/items/categories`),
     ]);
     setAccountDetails({
       xpData: xpData.data,
@@ -129,7 +132,7 @@ export const Home = () => {
     Object.entries(extraParams).forEach(([key, value]) =>
       params.append(key, value)
     );
-    return `https://api-accounts.avkngeeks.com/accounts/${selectedId}/items?${params.toString()}`;
+    return `${API_LINK}/accounts/${selectedId}/items?${params.toString()}`;
   };
   const handleResetButton = () => {
     setSearchTerm("");
