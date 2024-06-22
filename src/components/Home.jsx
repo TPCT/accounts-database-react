@@ -6,22 +6,34 @@ import LoadingGrow from "./LoadingGrow";
 import AccountDetails from "./AccountDetails";
 
 export const Home = () => {
+  const [loading, setLoading] = useState(false);
   const [accountsIsLoading, setAccountsIsLoading] = useState(true);
+
+
+  /* we will create store, reducer using redux toolkit */
   const [accountsData, setAccountsData] = useState([]);
-  const [selectedId, setSelectedId] = useState("");
   const [accountDetails, setAccountDetails] = useState(null);
   const [accountDetailsIsLoading, setAccountDetailsIsLoading] = useState(false);
   const [itemsData, setItemsData] = useState([]);
-  const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(false);
+  const [buyNowLink, setBuyNowLink] = useState("");
+  //
+
+  const [selectedId, setSelectedId] = useState(""); // will be taken from the dynamic parameter :id
+  const [page, setPage] = useState(1); // will be taken from the page query string from the url
+
+
+  /* will be placed in filter component */
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedAvailability, setSelectedAvailability] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedSubCategory, setSelectedSubCategory] = useState("");
   const [selectedCurrency, setSelectedCurrency] = useState("");
-  const [buyNowLink, setBuyNowLink] = useState("");
   const [activeReleaseDateSort, setActiveReleaseDateSort] = useState("");
   const [activePriceSort, setActivePriceSort] = useState("");
+  //
+
+
+
   const API_LINK = "https://api-accounts.avkngeeks.com"
 
   const containerRef = useRef(null);
