@@ -12,3 +12,5 @@ export const formatDate = (timestamp) => {
     day: "numeric",
   });
 };
+
+export const API_LINK = "https://api-accounts.avkngeeks.com";
