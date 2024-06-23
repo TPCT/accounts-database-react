@@ -16,13 +16,11 @@ const AccountDetails = ({
   setSelectedCategory,
   setSelectedSubCategory,
   setSelectedCurrency,
-  fetchItems,
   activeReleaseDateSort,
   setActiveReleaseDateSort,
   activePriceSort,
   setSelectedAvailability,
   setActivePriceSort,
-  handleResetButton,
 }) => {
   const accountsData = useSelector(
     (state) => state.accountDetails.accountsData
@@ -220,8 +218,6 @@ const AccountDetails = ({
               setSelectedSubCategory={setSelectedSubCategory}
               setSelectedCurrency={setSelectedCurrency}
               setSelectedAvailability={setSelectedAvailability}
-              fetchItems={fetchItems}
-              handleResetButton={handleResetButton}
             />
           </div>
 

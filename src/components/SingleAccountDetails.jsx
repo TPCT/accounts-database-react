@@ -10,6 +10,8 @@ import {
   fetchingItemsData,
   fetchingSingleAccountDetails,
 } from "../features/accountDetails/accountDetailsSlice";
+import {buildQueryString} from "../utils/helpers";
+
 
 const SingleAccountDetails = () => {
   const { id } = useParams();
@@ -23,26 +25,32 @@ const SingleAccountDetails = () => {
   const [selectedCurrency, setSelectedCurrency] = useState("");
   const [activeReleaseDateSort, setActiveReleaseDateSort] = useState("");
   const [activePriceSort, setActivePriceSort] = useState("");
-  const [page, setPage] = useState(1); // will be taken from the page query string from the url
+  const [page, setPage] = useState(2);
   const [loading, setLoading] = useState(false);
 
   const accountDetails = useSelector(
     (state) => state.accountDetails.accountDetails
   );
+
   const itemsData = useSelector((state) => state.accountDetails.itemsData);
-  const changePage = async ({ direction }) => {
-    if (direction === "prev" && page === 1) {
-      return;
-    }
+
+  const changePage = async (direction, page_index=0) => {
+    if (direction === "prev" && page <= 1)
+      return 1;
+
     setLoading(true);
-    const url = buildUrl({ page });
+
+    const url = buildUrl({ page: page_index ? page_index :  (direction === "prev") ? page -1 : page + 1 });
     const response = await axios.get(url);
+
     dispatch(fetchingItemsData(response.data));
-    if (direction === "next") {
+    if (direction === "next")
       setPage((prev) => prev + 1);
-    } else {
+    else if(direction === "prev")
       setPage((prev) => prev - 1);
-    }
+    else
+      setPage(page_index)
+
     setLoading(false);
   };
 
@@ -61,6 +69,7 @@ const SingleAccountDetails = () => {
     selectedAvailability,
     searchTerm,
   ]);
+
   const fetchAccountDetails = async (id) => {
     setAccountDetailsIsLoading(true);
     dispatch(fetchingSingleAccountDetails(null));
@@ -106,19 +115,19 @@ const SingleAccountDetails = () => {
   };
 
   const buildUrl = (extraParams = {}) => {
-    const params = new URLSearchParams();
-    if (searchTerm) params.append("keyword", searchTerm);
-    if (activePriceSort) params.append("price_sort", activePriceSort);
-    if (activeReleaseDateSort)
-      params.append("release_date_sort", activeReleaseDateSort);
-    if (selectedCategory) params.append("category", selectedCategory);
-    if (selectedSubCategory) params.append("sub_category", selectedSubCategory);
-    if (selectedCurrency) params.append("currency", selectedCurrency);
-    if (selectedAvailability)
-      params.append("availability", selectedAvailability);
-    Object.entries(extraParams).forEach(([key, value]) =>
-      params.append(key, value)
-    );
+    const params = buildQueryString(
+        searchTerm,
+        activePriceSort,
+        activeReleaseDateSort,
+        selectedCategory,
+        selectedSubCategory,
+        selectedCurrency,
+        selectedAvailability,
+        extraParams
+    )
+
+    if (!extraParams['page'])
+      setPage(1)
     return `${API_LINK}/accounts/${id}/items?${params.toString()}`;
   };
 
@@ -130,15 +139,16 @@ const SingleAccountDetails = () => {
     setSelectedSubCategory("");
     setSelectedCurrency("");
     setSelectedAvailability("");
+    setPage(1)
   };
+
+
   return (
     <>
       <section>{accountDetailsIsLoading && <LoadingGrow />}</section>
-
       {accountDetails && (
         <>
           <AccountDetails
-
             accountDetails={accountDetails}
             itemsData={itemsData}
             loading={loading}
@@ -159,14 +169,28 @@ const SingleAccountDetails = () => {
 
           <div className="d-flex justify-content-center gap-3 pb-5">
             <button
-              onClick={()=>changePage("prev")}
-              disabled={page === 1}
-              className="pagination-card"
+                onClick={() => changePage("prev")}
+                hidden={page <= 1}
+                className="pagination-card"
             >
-              <FaArrowLeft color="#fff" />
+              <FaArrowLeft color="#fff"/>
             </button>
-            <button onClick={()=>changePage("next")} className="pagination-card">
-              <FaArrowRight color="#fff" />
+            {
+              [-2, -1, 0, 1, 2, 3].map((item, index) => (
+                  <button
+                      onClick={() => changePage(null, page + item)}
+                      className="pagination-card"
+                      hidden={!(page+item >= 1 && page+item <= itemsData.pages)}
+                  >
+                    <span className={page === page + item ? "text-black-50" : "text-white"}>{page + item}</span>
+                  </button>
+              ))
+            }
+
+            <button
+                hidden={page >= itemsData.pages}
+                onClick={() => changePage("next")} className="pagination-card">
+              <FaArrowRight color="#fff"/>
             </button>
           </div>
         </>

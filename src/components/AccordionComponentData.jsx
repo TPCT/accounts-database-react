@@ -1,6 +1,6 @@
 import React from "react";
 import { transformKey } from "../utils/transformData";
-import { IoIosArrowDown } from "react-icons/io";
+
 
 const AccordionComponentData = ({ itemStatsData, slug, title }) => {
   const transformedData = Object.fromEntries(

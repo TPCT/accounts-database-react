@@ -2,9 +2,9 @@ import React from "react";
 import SingleItemCard from "./SingleItemCard";
 
 const ItemsCards = ({ itemsData }) => {
-  return itemsData.map((item,i) => (
+  return itemsData.items.map((item,i) => (
     <SingleItemCard
-    index={i}
+      index={i}
       category={item.category}
       key={item.mock_id}
       thumbnail_url={item.thumbnail_url}

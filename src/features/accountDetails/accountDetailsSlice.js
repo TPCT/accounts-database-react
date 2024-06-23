@@ -34,6 +34,7 @@ export const {
   fetchingAccountData,
   accountLoadingStatus,
   changeBuyNowLink,
-  fetchingItemsData,fetchingSingleAccountDetails
+  fetchingItemsData,
+  fetchingSingleAccountDetails
 } = accountDetailsSlice.actions;
 export default accountDetailsSlice.reducer;

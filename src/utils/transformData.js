@@ -13,4 +13,4 @@ export const formatDate = (timestamp) => {
   });
 };
 
-export const API_LINK = "https://api-accounts.avkngeeks.com";
+export const API_LINK = "http://127.0.0.1:8080" //"https://api-accounts.avkngeeks.com";
